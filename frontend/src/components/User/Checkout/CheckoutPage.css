@@ -1,0 +1,105 @@
+.checkout-page { background: #f8f9fa; min-height: 100vh; }
+.checkout-container { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
+
+.checkout-title {
+    text-align: center; margin-bottom: 30px; color: #333;
+    border-bottom: 3px solid #d0011b; display: inline-block;
+    padding-bottom: 10px; position: relative; left: 50%; transform: translateX(-50%);
+}
+
+.checkout-content { display: flex; gap: 30px; }
+
+/* Cột trái */
+.checkout-form-section { flex: 1.5; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.checkout-form-section h3 { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-top: 0; color: #333; }
+
+.checkout-form .form-group { margin-bottom: 15px; }
+.checkout-form label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+.checkout-form input, .checkout-form textarea {
+    width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;
+}
+.checkout-form input:focus { border-color: #d0011b; outline: none; }
+
+/* Phương thức thanh toán */
+.payment-method { margin-top: 20px; }
+.payment-label { font-weight: bold; display: block; margin-bottom: 10px; }
+.payment-options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+    display: flex; align-items: center; gap: 10px; padding: 15px; border: 1px solid #ddd;
+    border-radius: 8px; cursor: pointer; transition: all 0.2s;
+}
+.option:hover { background: #fff5f5; border-color: #d0011b; }
+.option.selected { border-color: #d0011b; background: #fff0f0; font-weight: bold; color: #d0011b; }
+.option input { width: auto; }
+
+/* Cột phải */
+.checkout-summary-section { flex: 1; }
+.order-summary-box {
+    background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 100px;
+}
+.order-summary-box h3 { margin-top: 0; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+
+.summary-items { max-height: 300px; overflow-y: auto; margin-bottom: 15px; }
+.summary-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; }
+.sum-info { color: #555; }
+
+.summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: #666; }
+.free-ship { color: green; font-weight: bold; }
+.summary-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: bold; margin-top: 15px; color: #333; }
+.total-price { color: #d0011b; font-size: 22px; }
+
+.place-order-btn {
+    width: 100%; padding: 15px; background: #d0011b; color: white;
+    border: none; border-radius: 5px; font-size: 16px; font-weight: bold;
+    margin-top: 20px; cursor: pointer; text-transform: uppercase;
+    transition: background 0.3s;
+}
+.place-order-btn:hover { background: #b00116; }
+.back-to-cart { display: block; text-align: center; margin-top: 15px; text-decoration: none; color: #666; font-size: 14px; }
+
+@media (max-width: 768px) {
+    .checkout-content { flex-direction: column-reverse; }
+}
+
+.banking-info {
+    margin-top: 15px;
+    padding: 20px;
+    background: #f0f9ff;
+    border: 1px dashed #007bff;
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.banking-note {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #0056b3;
+    font-weight: bold;
+}
+
+.qr-code-box img {
+    max-width: 270px; /* Kích thước mã QR */
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+
+.bank-details-text p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.bank-details-text b {
+    color: #000;
+    font-weight: 700;
+}
+
+/* Hiệu ứng hiện ra từ từ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

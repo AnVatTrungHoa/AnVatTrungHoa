@@ -1,0 +1,55 @@
+/* Hero Styles */
+.hero {
+  height: 450px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--white);
+  padding: 0 20px;
+}
+
+.hero__content {
+  max-width: 800px;
+}
+
+.hero__title {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero__subtitle {
+  font-size: 20px;
+  opacity: 0.95;
+  margin-bottom: 40px;
+}
+
+.hero__button {
+  display: inline-block;
+  padding: 15px 40px;
+  background-color: var(--accent-color);
+  color: var(--text-main);
+  font-weight: bold;
+  border-radius: 30px;
+  font-size: 18px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  border: none;
+}
+
+.hero__button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 768px) {
+  .hero__title {
+    font-size: 36px;
+  }
+  .hero__subtitle {
+    font-size: 18px;
+  }
+}

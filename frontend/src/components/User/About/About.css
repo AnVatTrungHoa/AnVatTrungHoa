@@ -1,0 +1,53 @@
+.about-banner {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://t4.ftcdn.net/jpg/02/13/85/65/360_F_213856525_if3w2jH3x0u1Fq7bXz0a1k1x1x1x1x1.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.about-banner h1 { font-size: 40px; margin-bottom: 10px; }
+.about-banner p { font-size: 18px; opacity: 0.9; }
+
+.about-container { padding: 50px 20px; }
+
+.about-section {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.about-text { flex: 1; }
+.about-text h2 { color: #d0011b; margin-bottom: 20px; }
+.about-text p { line-height: 1.8; color: #555; margin-bottom: 15px; font-size: 16px; }
+
+.about-image { flex: 1; }
+.about-image img { width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+}
+.feature-card:hover { transform: translateY(-5px); }
+.feature-icon { font-size: 40px; margin-bottom: 15px; }
+.feature-card h3 { color: #333; margin-bottom: 10px; }
+
+@media (max-width: 768px) {
+    .about-section { flex-direction: column; }
+    .features-grid { grid-template-columns: 1fr; }
+}

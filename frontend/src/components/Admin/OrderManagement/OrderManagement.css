@@ -1,0 +1,31 @@
+.order-management {
+    padding: 20px;
+}
+
+.status-filter {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #D1D5DB;
+}
+
+.sub-text {
+    font-size: 0.8rem;
+    color: #6B7280;
+}
+
+.amount {
+    font-weight: bold;
+    color: #1F2937;
+}
+
+.status-select {
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #D1D5DB;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.status-select:focus {
+    outline: 2px solid #DC2626;
+}

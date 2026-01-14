@@ -1,0 +1,83 @@
+/* Footer Styles */
+.footer {
+  background-color: #1F2937;
+  color: var(--white);
+  padding: 60px 0 20px;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer__column-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--accent-color);
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer__link {
+  color: #D1D5DB;
+  transition: color var(--transition-speed);
+}
+
+.footer__link:hover {
+  color: var(--accent-color);
+}
+
+.footer__text {
+  color: #D1D5DB;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.footer__socials {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap; /* Ensure icons wrap on small screens */
+}
+
+/* 
+ * IMPORTANT: Use explicit styling for social icons to ensure they are visible
+ * even if we use simple text placeholders instead of actual icons initially.
+ */
+.footer__social-icon {
+  width: 30px;
+  height: 30px;
+  background-color: #374151;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  font-size: 14px; /* Adjust size for emoji/text icons */
+}
+
+.footer__social-icon:hover {
+  background-color: var(--primary-color);
+}
+
+.footer__copyright {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #374151;
+  color: #9CA3AF;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}

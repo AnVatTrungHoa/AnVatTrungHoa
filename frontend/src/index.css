@@ -1,0 +1,46 @@
+:root {
+  /* Color Palette */
+  --primary-color: #dc2626; /* Red */
+  --secondary-color: #f97316; /* Orange */
+  --accent-color: #fbbf24; /* Yellow */
+  --background-color: #f9fafb; /* Light Gray */
+  --white: #ffffff;
+  --text-main: #111827; /* Dark Gray/Black */
+  --text-secondary: #6b7280; /* Gray */
+
+  /* Transitions */
+  --transition-speed: 0.3s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
