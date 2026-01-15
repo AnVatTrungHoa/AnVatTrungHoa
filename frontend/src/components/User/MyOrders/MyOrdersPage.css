@@ -57,16 +57,21 @@
 
 .order-item-card {
     background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     overflow: hidden;
-    border: 1px solid #f3f4f6;
+    border: 1px solid #edf2f7;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.order-item-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
 }
 
 .order-item-header {
-    padding: 16px 24px;
-    background-color: #f9fafb;
-    border-bottom: 1px solid #f3f4f6;
+    padding: 20px 24px;
+    background-color: #ffffff;
+    border-bottom: 1px dashed #e2e8f0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -74,31 +79,37 @@
 
 .order-info {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    gap: 16px;
 }
 
 .order-id {
-    font-weight: 700;
-    color: #111827;
+    font-weight: 800;
+    color: #1a202c;
+    background: #f7fafc;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 14px;
 }
 
 .order-date {
-    font-size: 13px;
-    color: #6b7280;
+    font-size: 14px;
+    color: #718096;
 }
 
 .order-status {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.status-pending { background-color: #fef3c7; color: #92400e; }
-.status-processing { background-color: #e0f2fe; color: #075985; }
-.status-completed { background-color: #dcfce7; color: #166534; }
-.status-cancelled { background-color: #fee2e2; color: #991b1b; }
+.status-pending { background-color: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.status-processing { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.status-completed { background-color: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.status-cancelled { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
 
 .order-products {
     padding: 0 24px;
@@ -106,49 +117,86 @@
 
 .product-mini-item {
     padding: 16px 0;
-    border-bottom: 1px solid #f3f4f6;
+    border-bottom: 1px solid #f8fafc;
     display: flex;
     align-items: center;
-    gap: 16px;
-}
-
-.product-mini-item:last-child {
-    border-bottom: none;
+    gap: 20px;
 }
 
 .product-mini-item img {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     object-fit: cover;
-    border-radius: 8px;
-    background-color: #f3f4f6;
-}
-
-.product-mini-info {
-    flex: 1;
+    border-radius: 12px;
+    background-color: #f1f5f9;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .product-mini-info h4 {
-    margin: 0 0 4px 0;
-    font-size: 15px;
-    color: #111827;
+    margin: 0 0 6px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2d3748;
 }
 
 .product-mini-info span {
-    font-size: 13px;
-    color: #6b7280;
+    font-size: 14px;
+    color: #718096;
+    background: #f7fafc;
+    padding: 2px 8px;
+    border-radius: 4px;
 }
 
 .product-mini-price {
-    font-weight: 600;
-    color: #111827;
+    font-weight: 700;
+    color: #1a202c;
+    font-size: 16px;
+}
+
+.order-item-footer {
+    padding: 24px;
+    background-color: #fcfcfd;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.shipping-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #4a5568;
+    font-size: 14px;
+}
+
+.shipping-detail span {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
 }
 
 .order-actions {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 12px;
+    gap: 16px;
+}
+
+.order-total-block {
+    text-align: right;
+}
+
+.total-label {
+    font-size: 14px;
+    color: #718096;
+    margin-right: 8px;
+}
+
+.total-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #d0011b;
 }
 
 .edit-order-btn {
@@ -163,10 +211,32 @@
     transition: all 0.2s;
 }
 
+.order-actions-group {
+    display: flex;
+    gap: 12px;
+}
+
 .edit-order-btn:hover {
     background-color: #f3f4f6;
     border-color: #9ca3af;
     color: #111827;
+}
+
+.cancel-order-btn {
+    padding: 8px 16px;
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancel-order-btn:hover {
+    background-color: #fecaca;
+    border-color: #f87171;
 }
 
 /* Modal Styling */

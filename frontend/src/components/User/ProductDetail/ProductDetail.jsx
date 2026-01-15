@@ -1,14 +1,14 @@
-// frontend/src/components/User/ProductDetail/ProductDetail.jsx
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { useParams, Link } from 'react-router-dom';
-import { API_URL } from '../../../services/api';
-import Header from '../Header/Header'; // Import Header
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { API_URL, getSafeImageUrl } from '../../../services/api';
+import Header from '../Header/Header';
 import Footer from '../Footer/Footer'; // Import Footer (nếu có)
 import './ProductDetail.css'; // Import file CSS làm đẹp
 
 const ProductDetail = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(true);
@@ -50,7 +50,7 @@ const ProductDetail = () => {
                 id: product.id,
                 name: product.name,
                 price: product.sale_price || product.price, // Ưu tiên giá sale
-                image: product.image_url,
+                image: getSafeImageUrl(product.image_url),
                 stock: product.stock,
                 quantity: quantity
             });
@@ -62,6 +62,11 @@ const ProductDetail = () => {
         // 4. Thông báo và dispatch sự kiện để Header cập nhật ngay lập tức (nếu Header có lắng nghe)
         toast.success(`✅ Đã thêm ${quantity} sản phẩm vào giỏ!`);
         window.dispatchEvent(new Event('storage')); // Mẹo để các tab khác cập nhật
+    };
+
+    const handleBuyNow = () => {
+        handleAddToCart();
+        navigate('/checkout');
     };
 
     if (loading) return <div className="pd-loading">⏳ Đang tải món ngon...</div>;
@@ -82,7 +87,7 @@ const ProductDetail = () => {
                     {/* CỘT TRÁI: ẢNH */}
                     <div className="pd-image-section">
                         <div className="pd-image-frame">
-                            <img src={product.image_url} alt={product.name} />
+                            <img src={getSafeImageUrl(product.image_url)} alt={product.name} />
                         </div>
                     </div>
 
@@ -121,7 +126,11 @@ const ProductDetail = () => {
                             </div>
 
                             <button className="pd-add-btn" onClick={handleAddToCart} disabled={product.stock === 0}>
-                                {product.stock === 0 ? 'HẾT HÀNG' : 'THÊM VÀO GIỎ HÀNG'}
+                                {product.stock === 0 ? 'HẾT HÀNG' : 'THÊM VÀO GIỎ'}
+                            </button>
+
+                            <button className="pd-buy-now-btn" onClick={handleBuyNow} disabled={product.stock === 0}>
+                                {product.stock === 0 ? 'HẾT HÀNG' : 'MUA NGAY'}
                             </button>
                         </div>
 

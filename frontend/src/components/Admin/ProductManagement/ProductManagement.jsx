@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { productsAPI, IMAGE_BASE_URL } from '../../../services/api';
+import { productsAPI, IMAGE_BASE_URL, getSafeImageUrl } from '../../../services/api';
 import { PRODUCT_CATEGORIES } from '../../../constants/categories';
-import { API_URL } from '../../../services/api';
 import ConfirmModal from '../../Common/ConfirmModal/ConfirmModal';
 import './ProductManagement.css';
-
-// Base URL cho hình ảnh - Lấy từ service tập trung
 
 const ProductManagement = () => {
     const [products, setProducts] = useState([]);
@@ -30,22 +27,24 @@ const ProductManagement = () => {
         fetchProducts();
     }, []);
 
+    // Hàm tạo URL đầy đủ để lưu vào database
+    const getFullImageUrl = (fileName) => {
+        if (!fileName) return '';
+        // Nếu đã có sẵn path thì thôi, không thì thêm IMAGE_BASE_URL
+        if (fileName.startsWith('http') || fileName.startsWith('/')) return fileName;
+        return IMAGE_BASE_URL + fileName;
+    };
+
     // Hàm tách tên file từ URL đầy đủ
     const extractFileName = (url) => {
         if (!url) return '';
-        // Nếu URL chứa base URL, tách ra lấy tên file
-        if (url.includes(IMAGE_BASE_URL)) {
-            return url.replace(IMAGE_BASE_URL, '');
-        }
-        // Nếu là URL đầy đủ khác, lấy phần cuối cùng sau dấu /
         const parts = url.split('/');
         return parts[parts.length - 1];
     };
 
-    // Hàm tạo URL đầy đủ từ tên file
-    const getFullImageUrl = (fileName) => {
-        if (!fileName) return '';
-        return IMAGE_BASE_URL + fileName;
+    // Hàm tạo URL an toàn để hiển thị
+    const getSafeUrl = (fileNameOrUrl) => {
+        return getSafeImageUrl(fileNameOrUrl);
     };
 
     const fetchProducts = async () => {
@@ -185,7 +184,7 @@ const ProductManagement = () => {
                             <tr key={product.id}>
                                 <td>#{product.id}</td>
                                 <td>
-                                    {product.image_url && <img src={product.image_url} alt={product.name} className="thumb" />}
+                                    {product.image_url && <img src={getSafeUrl(product.image_url)} alt={product.name} className="thumb" />}
                                 </td>
                                 <td>{product.name}</td>
                                 <td>{formatCurrency(product.price)}</td>
@@ -243,7 +242,7 @@ const ProductManagement = () => {
                                         <div className="image-preview-container">
                                             {formData.image_url && (
                                                 <div className="image-preview">
-                                                    <img src={formData.image_url} alt="Preview" onError={(e) => {
+                                                    <img src={getSafeUrl(formData.image_url)} alt="Preview" onError={(e) => {
                                                         e.target.style.display = 'none';
                                                     }} />
                                                     <button

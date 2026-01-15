@@ -1,7 +1,34 @@
 import axios from 'axios';
 
-export const API_URL = 'http://localhost:8080/chinese-snack-shop/backend/api';
-export const IMAGE_BASE_URL = 'http://localhost:8080/chinese-snack-shop/backend/uploads/products/';
+export const API_URL = '/api';
+export const IMAGE_BASE_URL = '/uploads/products/';
+
+// Hàm xử lý URL ảnh để tránh lỗi Mixed Content (HTTP trên HTTPS)
+// Chuyển đổi các URL tuyệt đối http://localhost thành đường dẫn tương đối để chạy qua Proxy
+export const getSafeImageUrl = (url) => {
+    if (!url) return 'https://via.placeholder.com/200x200';
+
+    // Nếu là URL tuyệt đối
+    if (url.startsWith('http')) {
+        // Chỉ xử lý nếu là link localhost (từ DB cũ) hoặc link nport (từ frontend hiện tại)
+        if (url.includes('localhost') || url.includes('127.0.0.1') || url.includes('nport.link')) {
+            const parts = url.split('/');
+            const fileName = parts[parts.length - 1];
+            return `${IMAGE_BASE_URL}${fileName}`;
+        }
+        // Các URL bên ngoài khác (VD: Shopee, ảnh từ trang khác) thì giữ nguyên để load trực tiếp
+        return url;
+    }
+
+    // Nếu là đường dẫn tương đối
+    // Trường hợp đã có sẵn prefix uploads/products/
+    if (url.includes('uploads/products/')) {
+        return url.startsWith('/') ? url : `/${url}`;
+    }
+
+    // Trường hợp chỉ là tên file
+    return `${IMAGE_BASE_URL}${url}`;
+};
 
 const api = axios.create({
     baseURL: API_URL,
@@ -72,7 +99,8 @@ export const ordersAPI = {
     getMyOrders: () => api.get('/orders/my_orders.php'),
     create: (orderData) => api.post('/orders/create.php', orderData),
     updateStatus: (id, status) => api.put('/orders/update_status.php', { id, status }),
-    updateInfo: (orderData) => api.put('/orders/update_info.php', orderData)
+    updateInfo: (orderData) => api.put('/orders/update_info.php', orderData),
+    cancelMyOrder: (id) => api.post('/orders/cancel_my_order.php', { id })
 };
 
 export const usersAPI = {

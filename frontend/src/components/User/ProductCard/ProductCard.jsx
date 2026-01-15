@@ -1,10 +1,10 @@
-// frontend/src/components/User/ProductCard/ProductCard.jsx
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // <--- QUAN TRỌNG: Phải có dòng này mới chuyển trang được
+import { useNavigate, Link } from 'react-router-dom';
+import { getSafeImageUrl } from '../../../services/api';
 import './ProductCard.css';
 
 const ProductCard = ({ product, onAddToCart }) => {
     const navigate = useNavigate();
+    // ... (rest of the component logic)
     // Format tiền Việt
     const formatPrice = (price) => {
         return new Intl.NumberFormat('vi-VN', {
@@ -36,7 +36,7 @@ const ProductCard = ({ product, onAddToCart }) => {
             <Link to={`/product/${product.id}`} className="product-card__link">
                 <div className="product-card__image-wrapper">
                     <img
-                        src={product.image_url || 'https://via.placeholder.com/200x200'}
+                        src={getSafeImageUrl(product.image_url)}
                         alt={product.name}
                         className="product-card__image"
                     />

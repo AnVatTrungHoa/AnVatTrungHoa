@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { ordersAPI, IMAGE_BASE_URL } from '../../../services/api';
+import { ordersAPI, getSafeImageUrl } from '../../../services/api';
 import { toast } from 'react-toastify';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import ConfirmModal from '../../Common/ConfirmModal/ConfirmModal';
 import './MyOrdersPage.css';
 
 const MyOrdersPage = () => {
@@ -17,6 +18,7 @@ const MyOrdersPage = () => {
         note: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [confirmCancel, setConfirmCancel] = useState({ open: false, orderId: null });
 
     const formatPrice = (price) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 
@@ -98,6 +100,21 @@ const MyOrdersPage = () => {
         }
     };
 
+    const handleCancelOrder = async () => {
+        const orderId = confirmCancel.orderId;
+        setConfirmCancel({ open: false, orderId: null });
+
+        try {
+            const response = await ordersAPI.cancelMyOrder(orderId);
+            if (response.data.success) {
+                toast.success('Hủy đơn hàng thành công!');
+                fetchMyOrders();
+            }
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Không thể hủy đơn hàng lúc này.');
+        }
+    };
+
     const getStatusText = (status) => {
         const statusMap = {
             'pending': { text: 'Chờ xác nhận', class: 'status-pending' },
@@ -145,7 +162,7 @@ const MyOrdersPage = () => {
                                     {order.items.map((item, idx) => (
                                         <div key={idx} className="product-mini-item">
                                             <img
-                                                src={item.image_url.includes('http') ? item.image_url : `${IMAGE_BASE_URL}${item.image_url}`}
+                                                src={getSafeImageUrl(item.image_url)}
                                                 alt={item.product_name}
                                             />
                                             <div className="product-mini-info">
@@ -161,9 +178,10 @@ const MyOrdersPage = () => {
 
                                 <div className="order-item-footer">
                                     <div className="shipping-info">
-                                        <span>📍 {order.shipping_address}</span>
-                                        <br />
-                                        <span>📞 {order.phone}</span>
+                                        <div className="shipping-detail">
+                                            <span>📍 <b>Địa chỉ:</b> {order.shipping_address}</span>
+                                            <span>📞 <b>SĐT:</b> {order.phone}</span>
+                                        </div>
                                     </div>
                                     <div className="order-actions">
                                         <div className="order-total-block">
@@ -171,12 +189,20 @@ const MyOrdersPage = () => {
                                             <span className="total-value">{formatPrice(order.total_amount)}</span>
                                         </div>
                                         {order.status === 'pending' && (
-                                            <button
-                                                className="edit-order-btn"
-                                                onClick={() => handleEditClick(order)}
-                                            >
-                                                Sửa thông tin
-                                            </button>
+                                            <div className="order-actions-group">
+                                                <button
+                                                    className="edit-order-btn"
+                                                    onClick={() => handleEditClick(order)}
+                                                >
+                                                    Sửa thông tin
+                                                </button>
+                                                <button
+                                                    className="cancel-order-btn"
+                                                    onClick={() => setConfirmCancel({ open: true, orderId: order.id })}
+                                                >
+                                                    Hủy đơn
+                                                </button>
+                                            </div>
                                         )}
                                     </div>
                                 </div>
@@ -241,6 +267,16 @@ const MyOrdersPage = () => {
                     </div>
                 </div>
             )}
+
+            <ConfirmModal
+                isOpen={confirmCancel.open}
+                title="Xác nhận hủy đơn"
+                message="Bạn có chắc chắn muốn hủy đơn hàng này không? Hành động này không thể hoàn tác."
+                onConfirm={handleCancelOrder}
+                onCancel={() => setConfirmCancel({ open: false, orderId: null })}
+                confirmText="Xác nhận hủy"
+                cancelText="Quay lại"
+            />
             <Footer />
         </div>
     );
